@@ -1,4 +1,4 @@
-define("playState", ["player"], (Player) => {
+define("playState", ["player", "asteroid"], (Player, Asteroid) => {
   return class PlayState extends Phaser.State {
     constructor() {
       super();
@@ -15,11 +15,11 @@ define("playState", ["player"], (Player) => {
     }
 
     preload() {
-      this.game.load.image("meteor1", "images/meteor1.png");
-      this.game.load.image("meteor2", "images/meteor2.png");
-      this.game.load.image("meteor3", "images/meteor3.png");
-      this.game.load.image("meteor4", "images/meteor4.png");
-      this.game.load.image("meteor5", "images/meteor5.png");
+      this.game.load.image("asteroid1", "images/asteroid1.png");
+      this.game.load.image("asteroid2", "images/asteroid2.png");
+      this.game.load.image("asteroid3", "images/asteroid3.png");
+      this.game.load.image("asteroid4", "images/asteroid4.png");
+      this.game.load.image("asteroid5", "images/asteroid5.png");
 
       this.game.load.image("bullet", "images/bullet.png");
       this.game.load.image("background", "images/background.png");
@@ -27,19 +27,13 @@ define("playState", ["player"], (Player) => {
     }
 
     create() {
-      this.asteroids = this.game.add.group();
+      this.asteroids = this.game.add.group(undefined, "asteroids", true);
 
       this.timer = this.time.create();
-      this.timer.loop(500, () => {
-        let asteroid = this.game.add.sprite(670, Math.random() * 480, "meteor" + Math.ceil(Math.random() * 5));
-        asteroid.anchor.set(0.5);
-        asteroid.scale.set(1.5);
-        this.game.physics.arcade.enable(asteroid);
-        asteroid.body.velocity.set(Math.random() * -200, Math.random() * 100 - 50);
-        asteroid.rotation = Math.random() * 2 * Math.PI;
-        asteroid.body.angularVelocity = Math.random() * 360;
-        asteroid.outOfBoundsKill = true;
-      });
+      this.timer.loop(500, function() {
+        let asteroid = new Asteroid(this.game);
+        this.asteroids.add(asteroid);
+      }, this);
       this.timer.start();
 
       this.background = this.game.add.tileSprite(0,0,this.stage.width,this.stage.height,"background");
@@ -75,6 +69,8 @@ define("playState", ["player"], (Player) => {
       }
 
       this.background.tilePosition.x -= 5;
+
+      this.physics.arcade.collide(this.player, this.asteroids);
     }
   };
 });
