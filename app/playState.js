@@ -39,7 +39,6 @@ define("playState", ["player"], (Player) => {
         asteroid.rotation = Math.random() * 2 * Math.PI;
         asteroid.body.angularVelocity = Math.random() * 360;
         asteroid.outOfBoundsKill = true;
-        this.asteroids.add(asteroid);
       });
       this.timer.start();
 
