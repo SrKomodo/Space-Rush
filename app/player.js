@@ -2,12 +2,22 @@ define("player", () => {
   return class Player extends Phaser.Sprite {
     constructor(game, x, y) {
       super(game, x, y, "player");
+
       this.anchor.set(0.5, 0.5);
       this.game.physics.enable(this);
       this.body.collideWorldBounds = true;
+
       this.smoothed = false;
+      this.animations.add("idle",[0, 1, 2]);
+      this.animations.play("idle", 5, true);
+
       this.weapon = this.game.add.weapon(-1, "bullet");
-      
+      this.weapon.bulletAngleVariance = 10;
+      this.weapon.fireRate = 50;
+      this.weapon.onFire.add(bullet => {
+        bullet.scale.set(1.5);
+        bullet.smoothed = false;
+      });
     }
 
     move(axis, v) {
@@ -18,7 +28,12 @@ define("player", () => {
     }
 
     shoot() {
-      this.weapon.fire(this.position, 670, this.position.y);
+      this.weapon.fire(new Phaser.Point(this.position.x + 13, this.position.y + 5), 670, this.position.y);
+    }
+
+    update() {
+      this.rotation = this.previousRotation + this.body.velocity.y * 0.0001;
+      this.rotation -= this.previousRotation * 0.1;
     }
   };
 });
