@@ -4,6 +4,10 @@
         "browser": true,
         "amd": true
     },
+    "globals": {
+        "Phaser": true,
+        "requirejs": true
+    },
     "extends": "eslint:recommended",
     "parserOptions": {
         "sourceType": "module"
