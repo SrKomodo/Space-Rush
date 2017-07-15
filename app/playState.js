@@ -70,7 +70,10 @@ define("playState", ["player", "asteroid"], (Player, Asteroid) => {
 
       this.background.tilePosition.x -= 5;
 
-      this.physics.arcade.collide(this.player, this.asteroids);
+      this.physics.arcade.overlap(this.player.weapon.bullets, this.asteroids, (bullet, asteroid) => {
+        bullet.kill();
+        asteroid.damage(10);
+      });
     }
   };
 });

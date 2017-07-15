@@ -6,6 +6,7 @@ define("asteroid", () => {
 
       this.anchor.set(0.5);
       this.scale.set(1.5);
+      this.health = 100;
 
       this.body.velocity.set(Math.random() * -200, Math.random() * 100 - 50);
       this.rotation = Math.random() * 2 * Math.PI;
