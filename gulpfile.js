@@ -48,7 +48,7 @@ gulp.task("html", () => {
 });
 
 gulp.task("media", () => {
-  return gulp.src("app/**/*.@(png|jpg|jpeg|gif|svg|otf|mp3)")
+  return gulp.src("app/**/*.@(png|jpg|jpeg|gif|svg|otf|mp3|wav)")
     .pipe(gulp.dest("build"));
 });
 
