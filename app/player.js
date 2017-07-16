@@ -14,6 +14,7 @@ define("player", () => {
       this.weapon = this.game.add.weapon(-1, "bullet");
       this.weapon.bulletAngleVariance = 5;
       this.weapon.fireRate = 20;
+      this.weapon.trackSprite(this, 13, 6);
       this.weapon.onFire.add(bullet => {
         bullet.scale.set(1.5);
         bullet.smoothed = false;
@@ -28,7 +29,7 @@ define("player", () => {
     }
 
     shoot() {
-      this.weapon.fire(new Phaser.Point(this.position.x + 13, this.position.y + 5), 670, this.position.y);
+      this.weapon.fireAtXY(670, this.position.y);
     }
 
     update() {
