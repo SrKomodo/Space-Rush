@@ -1,7 +1,27 @@
 define("asteroid", () => {
   return class Asteroid extends Phaser.Sprite {
     constructor(game) {
-      super(game, 670, Math.random() * 480, "asteroid" + Math.ceil(Math.random() * 5));
+      let asteroidType = Math.ceil(Math.random() * 5);
+      super(game, 670, Math.random() * 480, "asteroid" + asteroidType);
+
+      switch (asteroidType) {
+      case 1:
+        this.life = 100;
+        break;
+      case 2:
+        this.life = 20;
+        break;
+      case 3:
+        this.life = 100;
+        break;
+      case 4:
+        this.life = 50;
+        break;
+      case 5:
+        this.life = 100;
+        break;
+      }
+
       this.game.physics.enable(this);
       this.smoothed = false;
       
@@ -10,7 +30,6 @@ define("asteroid", () => {
 
       this.anchor.set(0.5);
       this.scale.set(1.5);
-      this.life = 100;
 
       this.body.velocity.set(Math.random() * -200, Math.random() * 100 - 50);
       this.rotation = Math.random() * 2 * Math.PI;
