@@ -1,4 +1,4 @@
-define("playState", ["player", "asteroid"], (Player, Asteroid) => {
+define("playState", ["player", "asteroid", "alien"], (Player, Asteroid, Alien) => {
   return class PlayState extends Phaser.State {
     constructor() {
       super();
@@ -25,8 +25,10 @@ define("playState", ["player", "asteroid"], (Player, Asteroid) => {
       this.game.load.spritesheet("asteroid5", "images/asteroid5.png", 26, 20);
 
       this.game.load.image("bullet", "images/bullet.png");
+      this.game.load.image("alienBullet", "images/alienBullet.png");
       this.game.load.image("background", "images/background.png");
       this.game.load.spritesheet("player", "images/player.png", 41, 17);
+      this.game.load.image("alien", "images/alien.png");
     }
 
     create() {
@@ -38,12 +40,20 @@ define("playState", ["player", "asteroid"], (Player, Asteroid) => {
       this.sounds.explosion.volume = 0.1;
 
       this.asteroids = this.game.add.group(undefined, "asteroids", true);
+      this.aliens = this.game.add.group(undefined, "aliens", true);
 
       this.timer = this.time.create();
+
       this.timer.loop(500, function() {
         let asteroid = new Asteroid(this.game);
         this.asteroids.add(asteroid);
       }, this);
+
+      this.timer.loop(2000, function() {
+        let alien = new Alien(this.game);
+        this.aliens.add(alien);
+      }, this);
+
       this.timer.start();
 
       this.background = this.game.add.tileSprite(0,0,this.stage.width,this.stage.height,"background");
@@ -51,6 +61,8 @@ define("playState", ["player", "asteroid"], (Player, Asteroid) => {
       this.player = new Player(this.game, 0, 240);
       this.player.scale.set(1.5);
       this.game.add.existing(this.player);
+
+      
     }
 
     update() {
