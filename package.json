@@ -1,0 +1,16 @@
+{
+  "name": "experiments",
+  "version": "1.0.0",
+  "dependencies": {
+    "babel-preset-env": "1.6.0",
+    "browser-sync": "2.18.12",
+    "del": "3.0.0",
+    "gulp": "3.9.1",
+    "gulp-autoprefixer": "4.0.0",
+    "gulp-babel": "6.1.2",
+    "gulp-eslint": "4.0.0",
+    "gulp-stylelint": "3.9.0",
+    "run-sequence": "2.0.0",
+    "stylelint-config-standard": "16.0.0"
+  }
+}
