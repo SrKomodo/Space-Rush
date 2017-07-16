@@ -12,8 +12,8 @@ define("player", () => {
       this.animations.play("idle", 5, true);
 
       this.weapon = this.game.add.weapon(-1, "bullet");
-      this.weapon.bulletAngleVariance = 10;
-      this.weapon.fireRate = 50;
+      this.weapon.bulletAngleVariance = 5;
+      this.weapon.fireRate = 20;
       this.weapon.onFire.add(bullet => {
         bullet.scale.set(1.5);
         bullet.smoothed = false;

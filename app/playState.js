@@ -15,11 +15,11 @@ define("playState", ["player", "asteroid"], (Player, Asteroid) => {
     }
 
     preload() {
-      this.game.load.image("asteroid1", "images/asteroid1.png");
-      this.game.load.image("asteroid2", "images/asteroid2.png");
-      this.game.load.image("asteroid3", "images/asteroid3.png");
-      this.game.load.image("asteroid4", "images/asteroid4.png");
-      this.game.load.image("asteroid5", "images/asteroid5.png");
+      this.game.load.spritesheet("asteroid1", "images/asteroid1.png", 28, 29);
+      this.game.load.spritesheet("asteroid2", "images/asteroid2.png", 15, 15);
+      this.game.load.spritesheet("asteroid3", "images/asteroid3.png", 29, 28);
+      this.game.load.spritesheet("asteroid4", "images/asteroid4.png", 14, 14);
+      this.game.load.spritesheet("asteroid5", "images/asteroid5.png", 26, 20);
 
       this.game.load.image("bullet", "images/bullet.png");
       this.game.load.image("background", "images/background.png");
@@ -70,9 +70,16 @@ define("playState", ["player", "asteroid"], (Player, Asteroid) => {
 
       this.background.tilePosition.x -= 5;
 
+      this.physics.arcade.collide(this.asteroids, this.asteroids);
       this.physics.arcade.overlap(this.player.weapon.bullets, this.asteroids, (bullet, asteroid) => {
-        bullet.kill();
-        asteroid.damage(10);
+        if (asteroid.life <= 0) {
+          asteroid.animations.play("explosion");
+        }
+        else {
+          asteroid.animations.play("hit");
+          asteroid.life -= 10;
+          bullet.kill();
+        }
       });
     }
   };
