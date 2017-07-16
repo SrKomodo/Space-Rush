@@ -15,6 +15,9 @@ define("playState", ["player", "asteroid"], (Player, Asteroid) => {
     }
 
     preload() {
+      this.game.load.audio("hit", "audio/hit.wav");
+      this.game.load.audio("explosion", "audio/explosion.wav");
+
       this.game.load.spritesheet("asteroid1", "images/asteroid1.png", 28, 29);
       this.game.load.spritesheet("asteroid2", "images/asteroid2.png", 15, 15);
       this.game.load.spritesheet("asteroid3", "images/asteroid3.png", 29, 28);
@@ -27,6 +30,13 @@ define("playState", ["player", "asteroid"], (Player, Asteroid) => {
     }
 
     create() {
+      this.sounds = {
+        hit: this.game.add.audio("hit"),
+        explosion: this.game.add.audio("explosion")
+      };
+      this.sounds.hit.volume = 0.1;
+      this.sounds.explosion.volume = 0.1;
+
       this.asteroids = this.game.add.group(undefined, "asteroids", true);
 
       this.timer = this.time.create();
@@ -73,9 +83,11 @@ define("playState", ["player", "asteroid"], (Player, Asteroid) => {
       this.physics.arcade.collide(this.asteroids, this.asteroids);
       this.physics.arcade.overlap(this.player.weapon.bullets, this.asteroids, (bullet, asteroid) => {
         if (asteroid.life <= 0) {
+          this.sounds.explosion.play();
           asteroid.animations.play("explosion");
         }
         else {
+          this.sounds.hit.play();
           asteroid.animations.play("hit");
           asteroid.life -= 10;
           bullet.kill();
