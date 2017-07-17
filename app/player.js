@@ -6,6 +6,7 @@ define("player", () => {
       this.anchor.set(0.5, 0.5);
       this.game.physics.enable(this);
       this.body.collideWorldBounds = true;
+      this.body.setSize(19, 17, 22, 0);
 
       this.smoothed = false;
       this.animations.add("idle",[0, 1, 2]);
