@@ -11,7 +11,7 @@ define("alien", () => {
         x: Math.random() * 320 + 320,
         y: direction === 1 ? 480 : 0
       }, 5000).start().onComplete.add(() => {
-        this.destroy();
+        this.kill();
       });
       
       this.weapon = this.game.add.weapon(-1, "alienBullet");
@@ -24,9 +24,8 @@ define("alien", () => {
     }
 
     update() {
-      if(this.game.state.getCurrentState().player) {
+      if (this.alive)
         this.weapon.fireAtSprite(this.game.state.getCurrentState().player);
-      }
     }
   };
 });

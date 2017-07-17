@@ -110,7 +110,7 @@ define("playState", ["player", "asteroid", "alien"], (Player, Asteroid, Alien) =
         asteroid.kill();
       });
 
-      this.aliens.forEachExists(alien => {
+      this.aliens.forEach(alien => {
 
         this.physics.arcade.overlap(this.player, alien.weapon.bullets, (player, bullet) => {
           player.life -= 10;
