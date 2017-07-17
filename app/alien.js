@@ -24,7 +24,9 @@ define("alien", () => {
     }
 
     update() {
-      this.weapon.fireAtSprite(this.game.state.getCurrentState().player);
+      if(this.game.state.getCurrentState().player) {
+        this.weapon.fireAtSprite(this.game.state.getCurrentState().player);
+      }
     }
   };
 });

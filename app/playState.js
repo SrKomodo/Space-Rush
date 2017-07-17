@@ -61,8 +61,6 @@ define("playState", ["player", "asteroid", "alien"], (Player, Asteroid, Alien) =
       this.player = new Player(this.game, 0, 240);
       this.player.scale.set(1.5);
       this.game.add.existing(this.player);
-
-      
     }
 
     update() {
@@ -104,6 +102,22 @@ define("playState", ["player", "asteroid", "alien"], (Player, Asteroid, Alien) =
           asteroid.life -= 10;
           bullet.kill();
         }
+      });
+
+      this.physics.arcade.overlap(this.asteroids, this.player, (player, asteroid) => {
+        player.life -= 10;
+        player.checkDead();
+        asteroid.kill();
+      });
+
+      this.aliens.forEachExists(alien => {
+
+        this.physics.arcade.overlap(this.player, alien.weapon.bullets, (player, bullet) => {
+          player.life -= 10;
+          player.checkDead();
+          bullet.kill();
+        });
+
       });
     }
   };

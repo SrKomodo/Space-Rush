@@ -19,6 +19,8 @@ define("player", () => {
         bullet.scale.set(1.5);
         bullet.smoothed = false;
       });
+
+      this.life = 100;
     }
 
     move(axis, v) {
@@ -35,6 +37,14 @@ define("player", () => {
     update() {
       this.rotation = this.previousRotation + this.body.velocity.y * 0.0001;
       this.rotation -= this.previousRotation * 0.1;
+    }
+
+    checkDead() {
+      if (this.life <= 0) {
+        this.game.state.getCurrentState().asteroids.destroy();
+        this.game.state.getCurrentState().aliens.destroy();
+        this.game.state.start("death", true);
+      }
     }
   };
 });

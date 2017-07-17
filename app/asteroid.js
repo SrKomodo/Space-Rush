@@ -38,7 +38,7 @@ define("asteroid", () => {
 
     update () {
       if (this.y < 0 || this.y > this.game.height || this.x < 0) {
-        this.destroy();
+        this.kill();
       }
     }
   };
